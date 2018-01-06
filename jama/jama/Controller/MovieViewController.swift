@@ -11,9 +11,20 @@ import UIKit
 class MovieViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
+    let api: APIClient = APIClient(api: APIBase())
+    var movies: [MovieResult] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        api.getMoviesNowPlaying{ (results) in
+            if let results = results {
+                self.movies = results
+                _ = self.movies.map{ print($0.title) }
+                DispatchQueue.main.async {
+                    self.collectionView.reloadSections(IndexSet(integer: 0))
+                }
+            }
+        }
     }
 
 }
@@ -21,11 +32,13 @@ class MovieViewController: UIViewController {
 extension MovieViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCollectionCell", for: indexPath) as! MovieCollectionViewCell
+        let movie = movies[indexPath.row]
+        cell.displayContent(title: movie.title)
         return cell
     }
 }
