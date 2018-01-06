@@ -21,6 +21,7 @@ class MovieViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationItem.title = "Now Playing"
         activityIndicator.startAnimating()
         api.getMoviesNowPlaying{ (results) in
             if let results = results {
