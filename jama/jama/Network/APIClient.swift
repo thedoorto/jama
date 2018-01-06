@@ -28,6 +28,11 @@ class APIClient {
         }
     }
     
+    func imageUrlForPath(_ path: String, size: String = "w185") -> String? {
+        let imageUrl = "https://image.tmdb.org/t/p/\(size)\(path)"
+        return imageUrl
+    }
+    
     private func getNowPlaying(completion: @escaping (ResultType<MovieResults>) -> Void) {
         guard let url = apiBase?.createURLWithPath("movie/now_playing") else {
             completion(ResultType.Failure(APIError.urlError))
