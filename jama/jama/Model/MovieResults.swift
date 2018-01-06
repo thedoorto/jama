@@ -10,9 +10,9 @@ import Foundation
 
 struct MovieResults: Codable {
     let results: [MovieResult]
-    let page, totalResults: Int
-    let dates: Dates
-    let totalPages: Int
+    let page, totalResults: Int?
+    let dates: Dates?
+    let totalPages: Int?
     
     enum CodingKeys: String, CodingKey {
         case results, page
@@ -23,16 +23,17 @@ struct MovieResults: Codable {
 }
 
 struct MovieResult: Codable {
-    let voteCount, id: Int
-    let video: Bool
-    let voteAverage: Double
-    let title: String
-    let popularity: Double
-    let posterPath, originalLanguage, originalTitle: String
-    let genreIDS: [Int]
-    let backdropPath: String
-    let adult: Bool
-    let overview, releaseDate: String
+    let id: Int
+    let voteCount: Int?
+    let video: Bool?
+    let voteAverage: Double?
+    let title: String?
+    let popularity: Double?
+    let posterPath, originalLanguage, originalTitle: String?
+    let genreIDS: [Int]?
+    let backdropPath: String?
+    let adult: Bool?
+    let overview, releaseDate: String?
     
     enum CodingKeys: String, CodingKey {
         case voteCount = "vote_count"
@@ -50,7 +51,7 @@ struct MovieResult: Codable {
 }
 
 struct Dates: Codable {
-    let maximum, minimum: String
+    let maximum, minimum: String?
 }
 
 // MARK: Convenience initializers

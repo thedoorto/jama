@@ -38,7 +38,7 @@ extension MovieViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCollectionCell", for: indexPath) as! MovieCollectionViewCell
         let movie = movies[indexPath.row]
-        if let posterUrl =  api.imageUrlForPath(movie.posterPath) {
+        if let posterPath = movie.posterPath, let posterUrl =  api.imageUrlForPath(posterPath) {
             cell.displayContent(posterUrl: posterUrl, title: movie.title)
         }
         return cell

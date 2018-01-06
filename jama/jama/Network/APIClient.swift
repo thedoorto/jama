@@ -32,15 +32,17 @@ class APIClient {
         getMovieById(movie.id) { (detail) in
             switch detail {
             case .Success(let detail):
-                if let id = detail.belongsToCollection?.id {
-                    self.getCollectionById(id) { (collection) in
-                        switch collection {
-                        case .Success(let collection):
-                            completion(detail, collection)
-                        case .Failure(let error):
-                            print(error.localizedDescription)
-                            completion(detail, nil)
-                        }
+                guard let id = detail.belongsToCollection?.id else {
+                    completion(detail, nil)
+                    return
+                }
+                self.getCollectionById(id) { (collection) in
+                    switch collection {
+                    case .Success(let collection):
+                        completion(detail, collection)
+                    case .Failure(let error):
+                        print(error.localizedDescription)
+                        completion(detail, nil)
                     }
                 }
             case .Failure(let error):
