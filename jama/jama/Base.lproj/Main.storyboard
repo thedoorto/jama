@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,25 +30,56 @@
                                     <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="47W-Zn-Sdp" customClass="MovieCollectionViewCell" customModule="jama" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="movieCollectionCell" id="47W-Zn-Sdp" customClass="MovieCollectionViewCell" customModule="jama" customModuleProvider="target">
                                         <rect key="frame" x="10" y="0.0" width="154" height="154"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="154" height="154"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="WZk-Bx-jEN">
+                                                    <rect key="frame" x="56" y="133" width="42" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pNQ-Nw-5dR">
+                                                    <rect key="frame" x="0.0" y="0.0" width="154" height="123.66666666666667"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="pNQ-Nw-5dR" secondAttribute="height" multiplier="5:4" id="ToX-dZ-8Pc"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="pNQ-Nw-5dR" firstAttribute="leading" secondItem="47W-Zn-Sdp" secondAttribute="leading" id="5MO-wA-s7p"/>
+                                            <constraint firstItem="pNQ-Nw-5dR" firstAttribute="top" secondItem="47W-Zn-Sdp" secondAttribute="top" id="UfL-Z8-H50"/>
+                                            <constraint firstAttribute="trailing" secondItem="pNQ-Nw-5dR" secondAttribute="trailing" id="fQa-04-ZLG"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="pNQ-Nw-5dR" id="nB5-iD-8Wf"/>
+                                            <outlet property="titleLabel" destination="WZk-Bx-jEN" id="zDW-Mz-q0T"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="5WG-UV-QhV"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Sym-Fz-yYE"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="lE8-Mz-1cn"/>
+                    <connections>
+                        <outlet property="collectionView" destination="euB-pH-dAI" id="egm-hA-FGP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="790" y="33"/>
+            <point key="canvasLocation" x="789.60000000000002" y="32.512315270935964"/>
         </scene>
         <!--Movie Detail View Controller-->
         <scene sceneID="dYo-ws-YUe">
