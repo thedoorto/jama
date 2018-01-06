@@ -16,7 +16,19 @@ class APIClient {
         self.apiBase = api
     }
     
-    func getNowPlaying(_ completion: @escaping (ResultType<MovieResults>) -> Void) {
+    func getMoviesNowPlaying(completion: @escaping ([MovieResult]?) -> Void) {
+        getNowPlaying{ (results) in
+            switch results {
+            case .Success(let value):
+                completion(value.results)
+            case .Failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
+            }
+        }
+    }
+    
+    private func getNowPlaying(completion: @escaping (ResultType<MovieResults>) -> Void) {
         guard let url = apiBase?.createURLWithPath("movie/now_playing") else {
             completion(ResultType.Failure(APIError.urlError))
             return
@@ -24,9 +36,9 @@ class APIClient {
         apiBase?.requestFromUrl(url, completion: completion)
     }
     
-    func getMovieById(_ completion: @escaping () -> Void) {
+    private func getMovieById(_ completion: @escaping () -> Void) {
     }
     
-    func getCollectionById(_ completion: @escaping () -> Void) {
+    private func getCollectionById(_ completion: @escaping () -> Void) {
     }
 }

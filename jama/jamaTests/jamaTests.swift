@@ -40,8 +40,9 @@ class jamaTests: XCTestCase {
     func testActualNowPlayingResponse() {
         var data: [MovieResult]?
         var firstResult: MovieResult?
+        let api: APIClient = APIClient(api: APIBase())
         let expectation = self.expectation(description: "Wait for data to load.")
-        getMoviesNowPlaying{ (results) in
+        api.getMoviesNowPlaying{ (results) in
             data = results
             if let data = data {
                 firstResult = data[0]
@@ -51,19 +52,6 @@ class jamaTests: XCTestCase {
         waitForExpectations(timeout: 30, handler: nil)
         XCTAssertTrue(data!.count > 0)
         XCTAssertNotNil(firstResult?.title)
-    }
-    
-    func getMoviesNowPlaying(completion: @escaping ([MovieResult]?) -> Void) {
-        let api: APIClient = APIClient(api: APIBase())
-        api.getNowPlaying{ (results) in
-            switch results {
-            case .Success(let value):
-                completion(value.results)
-            case .Failure(let error):
-                print(error.localizedDescription)
-                completion(nil)
-            }
-        }
     }
     
 }
