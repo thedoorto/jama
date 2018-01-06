@@ -2,7 +2,7 @@
 
 ### Why? ###
 
-A simple iPhone app using Swift 4 to access content provided the api provided by themoviedb.org
+A simple iPhone app using Swift 4 to access content provided by the api provided by themoviedb.org
 
 ### Set Up ###
 
