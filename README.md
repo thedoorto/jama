@@ -1,4 +1,4 @@
-# jama
+# jama: just another movie app
 
 ### Why? ###
 
