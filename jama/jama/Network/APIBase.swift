@@ -29,6 +29,7 @@ enum APIError: Error, LocalizedError {
 
 class APIBase {
     
+    // TODO: inject API_KEY
     let API_KEY = "5ceb13584d7786944cf796675575da97"
     var urlComponents = URLComponents()
     
@@ -58,6 +59,7 @@ class APIBase {
                 return
             }
             
+            // TODO: refine error handling to catch specific decoding issues
             do {
                 let jsonFromData =  try JSONDecoder().decode(T.self, from: data)
                 completion(ResultType.Success(jsonFromData))

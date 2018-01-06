@@ -6,6 +6,8 @@
 //  Copyright © 2018 Mark Brightman. All rights reserved.
 //
 
+// TODO: extend test coverage
+
 import XCTest
 
 class jamaUITests: XCTestCase {

@@ -6,6 +6,8 @@
 //  Copyright © 2018 Mark Brightman. All rights reserved.
 //
 
+// TODO: extract view specific code
+
 import UIKit
 
 class MovieDetailViewController: UIViewController {
@@ -82,7 +84,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             return cell
         }
         let movie = movies[indexPath.row]
-        if let posterPath = movie.posterPath, let posterUrl =  api.imageUrlForPath(posterPath, size: "w92") {
+        if let posterPath = movie.posterPath, let posterUrl =  api.imageUrlForPath(posterPath) {
             cell.displayContent(posterUrl: posterUrl, title: movie.title)
         }
         return cell
