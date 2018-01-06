@@ -28,11 +28,34 @@ class APIClient {
         }
     }
     
-    func getDetailForMovie(_ movie: MovieResult, completion: @escaping (MovieDetail?) -> Void) {
+    func getDetailForMovie(_ movie: MovieResult, completion: @escaping (MovieDetail?, MovieCollection?) -> Void) {
         getMovieById(movie.id) { (detail) in
             switch detail {
             case .Success(let detail):
-                completion(detail)
+                if let id = detail.belongsToCollection?.id {
+                    self.getCollectionById(id) { (collection) in
+                        switch collection {
+                        case .Success(let collection):
+                            completion(detail, collection)
+                        case .Failure(let error):
+                            print(error.localizedDescription)
+                            completion(detail, nil)
+                        }
+                    }
+                }
+            case .Failure(let error):
+                print(error.localizedDescription)
+                completion(nil, nil)
+            }
+            
+        }
+    }
+    
+    func getCollectionForId(_ id: Int, completion: @escaping (MovieCollection?) -> Void) {
+        getCollectionById(id) { (collection) in
+            switch collection {
+            case .Success(let collection):
+                completion(collection)
             case .Failure(let error):
                 print(error.localizedDescription)
                 completion(nil)
@@ -54,7 +77,7 @@ class APIClient {
         apiBase?.requestFromUrl(url, completion: completion)
     }
     
-    func getMovieById(_ id: Int?, completion: @escaping (ResultType<MovieDetail>) -> Void) {
+    private func getMovieById(_ id: Int?, completion: @escaping (ResultType<MovieDetail>) -> Void) {
         guard let id = id, let url = apiBase?.createURLWithPath("movie/\(id)") else {
             completion(ResultType.Failure(APIError.urlError))
             return
@@ -62,6 +85,11 @@ class APIClient {
         apiBase?.requestFromUrl(url, completion: completion)
     }
     
-    private func getCollectionById(_ completion: @escaping () -> Void) {
+    private func getCollectionById(_ id: Int?, completion: @escaping (ResultType<MovieCollection>) -> Void) {
+        guard let id = id, let url = apiBase?.createURLWithPath("collection/\(id)") else {
+            completion(ResultType.Failure(APIError.urlError))
+            return
+        }
+        apiBase?.requestFromUrl(url, completion: completion)
     }
 }
