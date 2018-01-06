@@ -37,10 +37,29 @@ class jamaTests: XCTestCase {
         }
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testActualNowPlayingResponse() {
+        var data: [Result] = []
+        var result: Result?
+        let expectation = self.expectation(description: "Wait for data to load.")
+        getMoviesNowPlaying{ (results) in
+            data = results
+            result = results[0]
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 30, handler: nil)
+        XCTAssertTrue(data.count > 0)
+        XCTAssertNotNil(result?.title)
+    }
+    
+    func getMoviesNowPlaying(completion: @escaping ([Result]) -> Void) {
+        let api: APIClient = APIClient(api: APIBase())
+        api.getNowPlaying{ (results) in
+            switch results {
+            case .Success(let value):
+                completion(value.results)
+            case .Failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
     

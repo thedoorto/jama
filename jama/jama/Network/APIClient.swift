@@ -10,7 +10,18 @@ import Foundation
 
 class APIClient {
     
-    func getNowPlaying(_ completion: @escaping () -> Void) {
+    var apiBase: APIBase?
+    
+    init(api: APIBase) {
+        self.apiBase = api
+    }
+    
+    func getNowPlaying(_ completion: @escaping (ResultType<MovieResults>) -> Void) {
+        guard let url = apiBase?.createURLWithPath("movie/now_playing") else {
+            completion(ResultType.Failure(APIError.urlError))
+            return
+        }
+        apiBase?.requestFromUrl(url, completion: completion)
     }
     
     func getMovieById(_ completion: @escaping () -> Void) {
