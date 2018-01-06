@@ -9,7 +9,7 @@
 import Foundation
 
 struct MovieResults: Codable {
-    let results: [Result]
+    let results: [MovieResult]
     let page, totalResults: Int
     let dates: Dates
     let totalPages: Int
@@ -22,7 +22,7 @@ struct MovieResults: Codable {
     }
 }
 
-struct Result: Codable {
+struct MovieResult: Codable {
     let voteCount, id: Int
     let video: Bool
     let voteAverage: Double
