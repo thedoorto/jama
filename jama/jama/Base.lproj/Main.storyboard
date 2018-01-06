@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -142,11 +143,6 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="8zk-N3-xZB">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="359"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="color" red="0.069295543439999996" green="1" blue="0.97734344120000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="movieDetailCollectionCell" id="KR3-cN-pX3" customClass="MovieCollectionViewCell" customModule="jama" customModuleProvider="target">
                                         <rect key="frame" x="10" y="0.0" width="154" height="154"/>
@@ -191,20 +187,27 @@
                                     <outlet property="delegate" destination="nq9-YE-c2Y" id="16D-uA-VvU"/>
                                 </connections>
                             </collectionView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="OK7-s6-CJM">
-                                <rect key="frame" x="169" y="146" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="OK7-s6-CJM">
+                                <rect key="frame" x="169" y="144" width="37" height="37"/>
+                                <color key="color" red="0.069295543439999996" green="1" blue="0.97734344120000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </activityIndicatorView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="8zk-N3-xZB">
+                                <rect key="frame" x="169" y="550" width="37" height="37"/>
                                 <color key="color" red="0.069295543439999996" green="1" blue="0.97734344120000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="vMe-ud-9G6" firstAttribute="top" secondItem="gQz-E4-MOH" secondAttribute="top" id="0tg-lY-UDs"/>
+                            <constraint firstItem="OK7-s6-CJM" firstAttribute="centerY" secondItem="Oax-7I-bBZ" secondAttribute="centerY" multiplier="0.4" id="1g6-jz-nV8"/>
                             <constraint firstItem="xvL-Cv-5Tf" firstAttribute="bottom" secondItem="gQz-E4-MOH" secondAttribute="bottom" id="2mU-P1-cgt"/>
                             <constraint firstItem="xvL-Cv-5Tf" firstAttribute="leading" secondItem="gQz-E4-MOH" secondAttribute="leading" id="2tk-27-CGV"/>
                             <constraint firstItem="gQz-E4-MOH" firstAttribute="trailing" secondItem="xvL-Cv-5Tf" secondAttribute="trailing" id="7O5-YN-LFx"/>
                             <constraint firstItem="9gT-sn-ir4" firstAttribute="top" secondItem="vMe-ud-9G6" secondAttribute="bottom" constant="8" id="810-UY-ZVF"/>
+                            <constraint firstItem="8zk-N3-xZB" firstAttribute="centerX" secondItem="Oax-7I-bBZ" secondAttribute="centerX" id="9sT-5c-JRP"/>
+                            <constraint firstItem="8zk-N3-xZB" firstAttribute="centerY" secondItem="Oax-7I-bBZ" secondAttribute="centerY" multiplier="1.4" id="Eed-PQ-ZZD"/>
                             <constraint firstItem="xvL-Cv-5Tf" firstAttribute="top" secondItem="KXf-PJ-tvC" secondAttribute="bottom" constant="8" id="FBM-gW-je8"/>
+                            <constraint firstItem="OK7-s6-CJM" firstAttribute="centerX" secondItem="Oax-7I-bBZ" secondAttribute="centerX" id="GhY-sw-5XM"/>
                             <constraint firstItem="9gT-sn-ir4" firstAttribute="leading" secondItem="gQz-E4-MOH" secondAttribute="leading" id="KWm-aA-y3p"/>
                             <constraint firstItem="KXf-PJ-tvC" firstAttribute="leading" secondItem="gQz-E4-MOH" secondAttribute="leading" constant="8" id="Ouh-0N-QTi"/>
                             <constraint firstItem="KXf-PJ-tvC" firstAttribute="top" secondItem="9gT-sn-ir4" secondAttribute="bottom" constant="8" id="WSy-DO-EGB"/>
