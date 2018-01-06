@@ -21,9 +21,20 @@ class jamaTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testJSONMapping() throws {
+        let bundle = Bundle(for: type(of: self))
+        
+        guard let url = bundle.url(forResource: "MovieResult", withExtension: "json") else {
+            XCTFail("Missing file: MovieResult.json")
+            return
+        }
+        
+        let jsonData = try Data(contentsOf: url)
+        if let movieResults = MovieResults(data: jsonData) {
+            XCTAssertEqual(movieResults.totalResults, 872)
+        } else {
+             XCTFail("totalResults")
+        }
     }
     
     func testPerformanceExample() {
