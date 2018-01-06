@@ -7,6 +7,7 @@
 //
 
 // TODO: extract view specific code
+// TODO: avoid duplication of collection view logic
 
 import UIKit
 
@@ -51,21 +52,10 @@ class MovieDetailViewController: UIViewController {
     }
     
     func updatePosterFromPath(_ path: String?) {
-        if let path = path,
-            let imageUrl = api.imageUrlForPath(path, size: "w342"),
-            let url = URL(string: imageUrl) {
-            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-                if error != nil {
-                    print(error?.localizedDescription as Any)
-                    return
-                }
-                if let imageData = data {
-                    DispatchQueue.main.async {
-                        self.imageView.image = UIImage(data: imageData)
-                    }
-                }
-            }).resume()
+        guard let path = path else {
+            return
         }
+        updateImageViewFromUrl(imageView: self.imageView, imageUrl: api.imageUrlForPath(path, size: "w342"))
     }
 }
 
