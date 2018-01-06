@@ -66,7 +66,7 @@ class APIClient {
         }
     }
     
-    func imageUrlForPath(_ path: String, size: String = "w185") -> String? {
+    func imageUrlForPath(_ path: String, size: String = "w154") -> String? {
         let imageUrl = "https://image.tmdb.org/t/p/\(size)\(path)"
         return imageUrl
     }

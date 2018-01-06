@@ -10,9 +10,13 @@ import UIKit
 
 class MovieDetailViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var descriptionText: UITextView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     let api: APIClient = APIClient(api: APIBase())
     var movie: MovieResult?
+    var movieCollection: MovieCollection?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +31,8 @@ class MovieDetailViewController: UIViewController {
         guard let movie = movie else {
             return
         }
+        titleLabel.text = movie.title
+        descriptionText.text = movie.overview
         api.getDetailForMovie(movie) { (detail, collection) in
             if let detail = detail {
                 self.updatePosterFromPath(detail.posterPath)
@@ -34,6 +40,10 @@ class MovieDetailViewController: UIViewController {
             
             if let collection = collection {
                 _ = collection.parts.map{ print($0.title!)}
+                self.movieCollection = collection
+                DispatchQueue.main.async {
+                    self.collectionView.reloadSections(IndexSet(integer: 0))
+                }
             }
         }
     }
@@ -56,3 +66,38 @@ class MovieDetailViewController: UIViewController {
         }
     }
 }
+
+extension MovieDetailViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let movies = movieCollection?.parts else {
+            return 0
+        }
+        return movies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieDetailCollectionCell", for: indexPath) as! MovieCollectionViewCell
+        guard let movies = movieCollection?.parts else {
+            return cell
+        }
+        let movie = movies[indexPath.row]
+        if let posterPath = movie.posterPath, let posterUrl =  api.imageUrlForPath(posterPath, size: "w92") {
+            cell.displayContent(posterUrl: posterUrl, title: movie.title)
+        }
+        return cell
+    }
+}
+
+extension MovieDetailViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let movies = movieCollection?.parts else {
+            return
+        }
+        let movie = movies[indexPath.row]
+        titleLabel.text = movie.title
+        descriptionText.text = movie.overview
+        updatePosterFromPath(movie.posterPath)
+    }
+}
+

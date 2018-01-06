@@ -16,10 +16,13 @@ class MovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         api.getMoviesNowPlaying{ (results) in
             if let results = results {
                 self.movies = results
-//                _ = self.movies.map{ print($0.title) }
                 DispatchQueue.main.async {
                     self.collectionView.reloadSections(IndexSet(integer: 0))
                 }
