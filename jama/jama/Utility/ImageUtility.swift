@@ -8,19 +8,24 @@
 
 import UIKit
 
-func updateImageViewFromUrl(imageView: UIImageView?, imageUrl: String?) {
+func updateImageViewFromUrl(imageView: UIImageView?, imageUrl: String?, completion: @escaping () -> Void) {
     if let imageView = imageView, let imageUrl = imageUrl,
         let url = URL(string: imageUrl) {
         URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    completion()
+                }
                 return
             }
             if let imageData = data {
                 DispatchQueue.main.async {
                     imageView.image = UIImage(data: imageData)
+                    completion()
                 }
             }
+            
         }).resume()
     }
 }

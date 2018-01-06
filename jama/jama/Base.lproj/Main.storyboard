@@ -73,18 +73,25 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Sym-Fz-yYE"/>
                                 </connections>
                             </collectionView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ca5-ND-bEU">
+                                <rect key="frame" x="169" y="388" width="37" height="37"/>
+                                <color key="color" red="0.069295543439999996" green="1" blue="0.97734344120000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="euB-pH-dAI" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="3G5-X0-KEn"/>
+                            <constraint firstItem="ca5-ND-bEU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YUu-uW-iL8"/>
                             <constraint firstItem="euB-pH-dAI" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="aEg-OQ-5nq"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="euB-pH-dAI" secondAttribute="bottom" id="dqx-kT-GrL"/>
                             <constraint firstItem="euB-pH-dAI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tDx-gd-kGo"/>
+                            <constraint firstItem="ca5-ND-bEU" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="y1r-Ew-DyA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="lE8-Mz-1cn"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="ca5-ND-bEU" id="H6V-oe-UXk"/>
                         <outlet property="collectionView" destination="euB-pH-dAI" id="egm-hA-FGP"/>
                     </connections>
                 </viewController>
@@ -116,14 +123,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KXf-PJ-tvC">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KXf-PJ-tvC">
                                 <rect key="frame" x="8" y="321" width="359" height="90"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="H9D-Av-gCx"/>
                                 </constraints>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xvL-Cv-5Tf">
@@ -135,6 +142,11 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="8zk-N3-xZB">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="359"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="color" red="0.069295543439999996" green="1" blue="0.97734344120000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="movieDetailCollectionCell" id="KR3-cN-pX3" customClass="MovieCollectionViewCell" customModule="jama" customModuleProvider="target">
                                         <rect key="frame" x="10" y="0.0" width="154" height="154"/>
@@ -179,6 +191,11 @@
                                     <outlet property="delegate" destination="nq9-YE-c2Y" id="16D-uA-VvU"/>
                                 </connections>
                             </collectionView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="OK7-s6-CJM">
+                                <rect key="frame" x="169" y="146" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.069295543439999996" green="1" blue="0.97734344120000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -198,8 +215,10 @@
                         <viewLayoutGuide key="safeArea" id="gQz-E4-MOH"/>
                     </view>
                     <connections>
+                        <outlet property="collectionActivityIndicator" destination="8zk-N3-xZB" id="dxW-HB-gdi"/>
                         <outlet property="collectionView" destination="xvL-Cv-5Tf" id="P9m-Ny-663"/>
                         <outlet property="descriptionText" destination="KXf-PJ-tvC" id="BY3-St-MMX"/>
+                        <outlet property="imageActivityIndicator" destination="OK7-s6-CJM" id="iV6-ae-RmI"/>
                         <outlet property="imageView" destination="vMe-ud-9G6" id="B3V-cr-OEy"/>
                         <outlet property="titleLabel" destination="9gT-sn-ir4" id="GiH-Z0-JI6"/>
                     </connections>

@@ -16,6 +16,8 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionText: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     
     let api: APIClient = APIClient(api: APIBase())
     var movie: MovieResult?
@@ -27,6 +29,8 @@ class MovieDetailViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.imageActivityIndicator.stopAnimating()
+        self.collectionActivityIndicator.stopAnimating()
         updateUI()
     }
 
@@ -42,20 +46,28 @@ class MovieDetailViewController: UIViewController {
             }
             
             if let collection = collection {
-                _ = collection.parts.map{ print($0.title!)}
+                DispatchQueue.main.async {
+                    self.collectionActivityIndicator.startAnimating()
+                }
                 self.movieCollection = collection
                 DispatchQueue.main.async {
                     self.collectionView.reloadSections(IndexSet(integer: 0))
+                    self.collectionActivityIndicator.stopAnimating()
                 }
             }
         }
     }
     
     func updatePosterFromPath(_ path: String?) {
+        DispatchQueue.main.async {
+            self.imageActivityIndicator.startAnimating()
+        }
         guard let path = path else {
             return
         }
-        updateImageViewFromUrl(imageView: self.imageView, imageUrl: api.imageUrlForPath(path, size: "w342"))
+        updateImageViewFromUrl(imageView: self.imageView, imageUrl: api.imageUrlForPath(path, size: "w342")) {
+            self.imageActivityIndicator.stopAnimating()
+        }
     }
 }
 

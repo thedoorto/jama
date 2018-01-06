@@ -10,6 +10,7 @@ import UIKit
 
 class MovieViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let api: APIClient = APIClient(api: APIBase())
     var movies: [MovieResult] = []
@@ -20,11 +21,13 @@ class MovieViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        activityIndicator.startAnimating()
         api.getMoviesNowPlaying{ (results) in
             if let results = results {
                 self.movies = results
                 DispatchQueue.main.async {
                     self.collectionView.reloadSections(IndexSet(integer: 0))
+                    self.activityIndicator.stopAnimating()
                 }
             }
         }

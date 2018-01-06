@@ -13,7 +13,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
     func displayContent(posterUrl: String, title: String?) {
-        updateImageViewFromUrl(imageView: self.imageView, imageUrl: posterUrl)
+        updateImageViewFromUrl(imageView: self.imageView, imageUrl: posterUrl) { }
         titleLabel.text = title
     }
 }
