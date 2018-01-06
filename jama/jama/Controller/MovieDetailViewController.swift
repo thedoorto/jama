@@ -9,27 +9,43 @@
 import UIKit
 
 class MovieDetailViewController: UIViewController {
-
+    @IBOutlet weak var imageView: UIImageView!
+    
+    let api: APIClient = APIClient(api: APIBase())
+    var movie: MovieResult?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateUI()
     }
-    
 
-    /*
-    // MARK: - Navigation
+    func updateUI() {
+        guard let movie = movie else {
+            return
+        }
+        api.getDetailForMovie(movie) { (detail) in
+            if let detail = detail {
+                if let path = detail.posterPath,
+                    let imageUrl = self.api.imageUrlForPath(path, size: "w342"),
+                    let url = URL(string: imageUrl) {
+                    URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+                        if error != nil {
+                            print(error?.localizedDescription as Any)
+                            return
+                        }
+                        if let imageData = data {
+                            DispatchQueue.main.async {
+                                self.imageView.image = UIImage(data: imageData)
+                            }
+                        }
+                    }).resume()
+                }
+            }
+        }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
-
 }

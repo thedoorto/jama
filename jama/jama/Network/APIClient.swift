@@ -28,6 +28,19 @@ class APIClient {
         }
     }
     
+    func getDetailForMovie(_ movie: MovieResult, completion: @escaping (MovieDetail?) -> Void) {
+        getMovieById(movie.id) { (detail) in
+            switch detail {
+            case .Success(let detail):
+                completion(detail)
+            case .Failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
+            }
+            
+        }
+    }
+    
     func imageUrlForPath(_ path: String, size: String = "w185") -> String? {
         let imageUrl = "https://image.tmdb.org/t/p/\(size)\(path)"
         return imageUrl
@@ -41,7 +54,12 @@ class APIClient {
         apiBase?.requestFromUrl(url, completion: completion)
     }
     
-    private func getMovieById(_ completion: @escaping () -> Void) {
+    func getMovieById(_ id: Int?, completion: @escaping (ResultType<MovieDetail>) -> Void) {
+        guard let id = id, let url = apiBase?.createURLWithPath("movie/\(id)") else {
+            completion(ResultType.Failure(APIError.urlError))
+            return
+        }
+        apiBase?.requestFromUrl(url, completion: completion)
     }
     
     private func getCollectionById(_ completion: @escaping () -> Void) {

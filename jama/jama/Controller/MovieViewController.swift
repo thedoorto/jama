@@ -19,7 +19,7 @@ class MovieViewController: UIViewController {
         api.getMoviesNowPlaying{ (results) in
             if let results = results {
                 self.movies = results
-                _ = self.movies.map{ print($0.title) }
+//                _ = self.movies.map{ print($0.title) }
                 DispatchQueue.main.async {
                     self.collectionView.reloadSections(IndexSet(integer: 0))
                 }
@@ -48,6 +48,7 @@ extension MovieViewController: UICollectionViewDataSource {
 extension MovieViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let detailViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController {
+            detailViewController.movie = movies[indexPath.row]
             self.navigationController?.pushViewController(detailViewController, animated: true)
         }
     }
