@@ -94,7 +94,6 @@ class APIBase {
                 return
             }
             
-            // TODO: refine error handling to catch specific decoding issues
             do {
                 let jsonFromData =  try JSONDecoder().decode(T.self, from: data)
                 completion(ResultType.Success(jsonFromData))
