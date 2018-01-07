@@ -29,6 +29,22 @@ enum APIError: Error, LocalizedError {
     }
 }
 
+extension DecodingError {
+    
+    public var errorDescription: String? {
+        switch  self {
+        case .dataCorrupted(let context):
+            return NSLocalizedString(context.debugDescription, comment: "")
+        case .keyNotFound(_, let context):
+            return NSLocalizedString("\(context.debugDescription)", comment: "")
+        case .typeMismatch(_, let context):
+            return NSLocalizedString("\(context.debugDescription)", comment: "")
+        case .valueNotFound(_, let context):
+            return NSLocalizedString("\(context.debugDescription)", comment: "")
+        }
+    }
+}
+
 enum imageSize: String {
     case small  = "w154"
     case medium = "w342"
@@ -82,6 +98,14 @@ class APIBase {
             do {
                 let jsonFromData =  try JSONDecoder().decode(T.self, from: data)
                 completion(ResultType.Success(jsonFromData))
+            } catch DecodingError.dataCorrupted(let context) {
+                completion(ResultType.Failure(DecodingError.dataCorrupted(context)))
+            } catch DecodingError.keyNotFound(let key, let context) {
+                completion(ResultType.Failure(DecodingError.keyNotFound(key, context)))
+            } catch DecodingError.typeMismatch(let type, let context) {
+                completion(ResultType.Failure(DecodingError.typeMismatch(type, context)))
+            } catch DecodingError.valueNotFound(let value, let context) {
+                completion(ResultType.Failure(DecodingError.valueNotFound(value, context)))
             } catch {
                 completion(ResultType.Failure(APIError.unknownError))
             }
