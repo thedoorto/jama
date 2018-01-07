@@ -2,19 +2,21 @@
 
 ### What ###
 
-A simple iPhone app using Swift 4 to access content provided by the api provided by themoviedb.org
+A simple iPhone app to access content provided by the api provided by themoviedb.org
 
 ### MVP Choices ###
 
 * no use of third party libraries
 * MVC architecture alongside a distinct 'network' element
 * iPhone / portrait support only
+* Xcode 9.2, Swift 4
 
 ### Next Steps ###
 
-* extend unit test
+* extend unit test coverage
 * refine UI
 * consider adopting MVVM
-* handle paging from API using datasource pre-fetching
+* consider adoption of third-party libraries including: https://github.com/gkye/TheMovieDatabaseSwiftWrapper
+* handle paging from API using data source pre-fetching
 * read configuration from API
 * include UI tests
