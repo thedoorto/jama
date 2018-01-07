@@ -9,3 +9,12 @@ A simple iPhone app using Swift 4 to access content provided by the api provided
 * no use of third party libraries
 * MVC architecture alongside a distinct 'network' element
 * iPhone / portrait support only
+
+### Next Steps ###
+
+* extend unit test
+* refine UI
+* consider adopting MVVM
+* handle paging from API using datasource pre-fetching
+* read configuration from API
+* include UI tests
