@@ -62,10 +62,11 @@ class MovieDetailViewController: UIViewController {
         DispatchQueue.main.async {
             self.imageActivityIndicator.startAnimating()
         }
-        guard let path = path else {
+        guard let path = path,
+            let imageUrl = api.imageUrlForPath(path, size: .medium) else {
             return
         }
-        updateImageViewFromUrl(imageView: self.imageView, imageUrl: api.imageUrlForPath(path, size: "w342")) {
+        updateImageViewFromUrl(imageView: self.imageView, imageUrl: imageUrl) {
             self.imageActivityIndicator.stopAnimating()
         }
     }
@@ -101,6 +102,7 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         let movie = movies[indexPath.row]
         titleLabel.text = movie.title
         descriptionText.text = movie.overview
+        descriptionText.scrollRangeToVisible(NSMakeRange(0, 0))
         updatePosterFromPath(movie.posterPath)
     }
 }

@@ -11,7 +11,7 @@ import Foundation
 class APIClient {
     
     var apiBase: APIBase?
-    
+
     init(api: APIBase) {
         self.apiBase = api
     }
@@ -66,13 +66,15 @@ class APIClient {
         }
     }
     
-    func imageUrlForPath(_ path: String, size: String = "w154") -> String? {
-        let imageUrl = "https://image.tmdb.org/t/p/\(size)\(path)"
-        return imageUrl
+    func imageUrlForPath(_ path: String, size: imageSize = .small) -> String? {
+        guard let base = apiBase?.baseImageUrl else {
+            return nil
+        }
+        return "\(base)\(size.rawValue)\(path)"
     }
     
     private func getNowPlaying(completion: @escaping (ResultType<MovieResults>) -> Void) {
-        guard let url = apiBase?.createURLWithPath("movie/now_playing") else {
+        guard let url = apiBase?.createURLForPath(.nowPlaying) else {
             completion(ResultType.Failure(APIError.urlError))
             return
         }
@@ -80,7 +82,8 @@ class APIClient {
     }
     
     private func getMovieById(_ id: Int?, completion: @escaping (ResultType<MovieDetail>) -> Void) {
-        guard let id = id, let url = apiBase?.createURLWithPath("movie/\(id)") else {
+        guard let id = id,
+            let url = apiBase?.createURLForPath(.movie, id: id) else {
             completion(ResultType.Failure(APIError.urlError))
             return
         }
@@ -88,7 +91,8 @@ class APIClient {
     }
     
     private func getCollectionById(_ id: Int?, completion: @escaping (ResultType<MovieCollection>) -> Void) {
-        guard let id = id, let url = apiBase?.createURLWithPath("collection/\(id)") else {
+        guard let id = id,
+            let url = apiBase?.createURLForPath(.collection, id: id) else {
             completion(ResultType.Failure(APIError.urlError))
             return
         }

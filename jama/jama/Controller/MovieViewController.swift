@@ -17,11 +17,27 @@ class MovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = NSLocalizedString("Now Playing", comment: "Now Playing")
+        let refreshControl = UIRefreshControl()
+        let title = NSLocalizedString("Pull to refresh", comment: "Pull to refresh")
+        refreshControl.attributedTitle = NSAttributedString(string: title)
+        refreshControl.addTarget(self,
+                                 action: #selector(refreshOptions(sender:)),
+                                 for: .valueChanged)
+        collectionView.refreshControl = refreshControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.title = "Now Playing"
+        updateMovies()
+    }
+
+    @objc private func refreshOptions(sender: UIRefreshControl) {
+        updateMovies()
+        sender.endRefreshing()
+    }
+    
+    private func updateMovies() {
         activityIndicator.startAnimating()
         api.getMoviesNowPlaying{ (results) in
             if let results = results {
@@ -33,7 +49,6 @@ class MovieViewController: UIViewController {
             }
         }
     }
-
 }
 
 extension MovieViewController: UICollectionViewDataSource {
