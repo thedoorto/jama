@@ -60,8 +60,9 @@ enum apiPath: String {
 class APIBase {
     
     // TODO: inject api key and general config
+    static let baseImageUrl = "https://image.tmdb.org/t/p/"
     let apiKey = Bundle.main.object(forInfoDictionaryKey: "TMDB_API_KEY") as? String
-    let baseImageUrl = "https://image.tmdb.org/t/p/"
+//    let baseImageUrl = "https://image.tmdb.org/t/p/"
     var urlComponents = URLComponents()
     
     init() {

@@ -14,6 +14,7 @@ class MovieViewController: UIViewController {
     
     let api: APIClient = APIClient(api: APIBase())
     var movies: [MovieResult] = []
+    var wantsToWatch = Set<Int>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,11 @@ class MovieViewController: UIViewController {
                                  action: #selector(refreshOptions(sender:)),
                                  for: .valueChanged)
         collectionView.refreshControl = refreshControl
+
+        let nc = NotificationCenter.default 
+        nc.addObserver(forName:Notification.Name(rawValue:"WantsToWatch"),
+                       object:nil, queue:nil,
+                       using:handleNotification)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,6 +38,18 @@ class MovieViewController: UIViewController {
         updateMovies()
     }
 
+    func handleNotification(notification:Notification) -> Void {
+         guard let userInfo = notification.userInfo,
+            let id  = userInfo["id"] as? Int,
+            let value = userInfo["value"] as? Bool
+            else { return }
+        if value {
+            wantsToWatch.insert(id)
+        } else {
+            wantsToWatch.remove(id)
+        }
+    }
+    
     @objc private func refreshOptions(sender: UIRefreshControl) {
         updateMovies()
         sender.endRefreshing()
@@ -60,9 +78,11 @@ extension MovieViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCollectionCell", for: indexPath) as! MovieCollectionViewCell
         let movie = movies[indexPath.row]
-        if let posterPath = movie.posterPath, let posterUrl =  api.imageUrlForPath(posterPath) {
-            cell.displayContent(posterUrl: posterUrl, title: movie.title)
-        }
+        cell.displayMovie(movie: movie, wantsToWatch: wantsToWatch.contains(movie.id))
+//        if let posterPath = movie.posterPath, let posterUrl =  api.imageUrlForPath(posterPath) {
+//            cell.tag = movie.id
+//            cell.displayContent(posterUrl: posterUrl, title: movie.title, wantsToWatch: wantsToWatch.contains(movie.id))
+//        }
         return cell
     }
 }

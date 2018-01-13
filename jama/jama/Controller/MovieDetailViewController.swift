@@ -12,12 +12,13 @@
 import UIKit
 
 class MovieDetailViewController: UIViewController {
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionText: UITextView!
+//    @IBOutlet weak var imageView: UIImageView!
+//    @IBOutlet weak var titleLabel: UILabel!
+//    @IBOutlet weak var descriptionText: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var detailView: MovieDetailView!
     
     let api: APIClient = APIClient(api: APIBase())
     var movie: MovieResult?
@@ -38,11 +39,13 @@ class MovieDetailViewController: UIViewController {
         guard let movie = movie else {
             return
         }
-        titleLabel.text = movie.title
-        descriptionText.text = movie.overview
+        detailView.viewModel = MovieDetailView.ViewModel(result: movie)
+//        titleLabel.text = movie.title
+//        descriptionText.text = movie.overview
         api.getDetailForMovie(movie) { (detail, collection) in
             if let detail = detail {
-                self.updatePosterFromPath(detail.posterPath)
+                self.detailView.viewModel = MovieDetailView.ViewModel(movie: detail)
+//                self.updatePosterFromPath(detail.posterPath)
             }
             
             if let collection = collection {
@@ -58,18 +61,18 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
-    func updatePosterFromPath(_ path: String?) {
-        DispatchQueue.main.async {
-            self.imageActivityIndicator.startAnimating()
-        }
-        guard let path = path,
-            let imageUrl = api.imageUrlForPath(path, size: .medium) else {
-            return
-        }
-        updateImageViewFromUrl(imageView: self.imageView, imageUrl: imageUrl) {
-            self.imageActivityIndicator.stopAnimating()
-        }
-    }
+//    func updatePosterFromPath(_ path: String?) {
+//        DispatchQueue.main.async {
+//            self.imageActivityIndicator.startAnimating()
+//        }
+//        guard let path = path,
+//            let imageUrl = api.imageUrlForPath(path, size: .medium) else {
+//            return
+//        }
+//        updateImageViewFromUrl(imageView: self.imageView, imageUrl: imageUrl) {
+//            self.imageActivityIndicator.stopAnimating()
+//        }
+//    }
 }
 
 extension MovieDetailViewController: UICollectionViewDataSource {
@@ -87,9 +90,11 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             return cell
         }
         let movie = movies[indexPath.row]
-        if let posterPath = movie.posterPath, let posterUrl =  api.imageUrlForPath(posterPath) {
-            cell.displayContent(posterUrl: posterUrl, title: movie.title)
-        }
+        cell.displayMovieCollectionPart(movie: movie)
+//        cell.tag = movie.id
+//        if let posterPath = movie.posterPath, let posterUrl =  api.imageUrlForPath(posterPath) {
+//            cell.displayContent(posterUrl: posterUrl, title: movie.title)
+//        }
         return cell
     }
 }
@@ -100,10 +105,10 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             return
         }
         let movie = movies[indexPath.row]
-        titleLabel.text = movie.title
-        descriptionText.text = movie.overview
-        descriptionText.scrollRangeToVisible(NSMakeRange(0, 0))
-        updatePosterFromPath(movie.posterPath)
+//        titleLabel.text = movie.title
+//        descriptionText.text = movie.overview
+//        descriptionText.scrollRangeToVisible(NSMakeRange(0, 0))
+//        updatePosterFromPath(movie.posterPath)
     }
 }
 

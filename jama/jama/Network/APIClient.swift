@@ -67,10 +67,10 @@ class APIClient {
     }
     
     func imageUrlForPath(_ path: String, size: imageSize = .small) -> String? {
-        guard let base = apiBase?.baseImageUrl else {
-            return nil
-        }
-        return "\(base)\(size.rawValue)\(path)"
+//        guard let base = apiBase?.baseImageUrl else {
+//            return nil
+//        }
+        return "\(APIBase.baseImageUrl)\(size.rawValue)\(path)"
     }
     
     private func getNowPlaying(completion: @escaping (ResultType<MovieResults>) -> Void) {

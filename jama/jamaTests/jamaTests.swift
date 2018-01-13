@@ -56,4 +56,28 @@ class jamaTests: XCTestCase {
         XCTAssertNotNil(firstResult?.title)
     }
     
+    func testSaveMovieResults() throws {
+        let bundle = Bundle(for: type(of: self))
+        
+        guard let url = bundle.url(forResource: "MovieResult", withExtension: "json") else {
+            XCTFail("Missing file: MovieResult.json")
+            return
+        }
+        
+        let jsonData = try Data(contentsOf: url)
+        if let movieResults = MovieResults(data: jsonData) {
+           movieResults.saveToDocuments()
+        } else {
+            XCTFail("Unable to retrive from json file: MovieResults")
+        }
+    }
+    
+    func testReadMovieResults() throws {
+        let movieResults: MovieResults? = MovieResults(document: "movieResults.json")
+        if let movieResults = movieResults {
+            XCTAssertEqual(movieResults.totalResults, 872)
+        } else {
+            XCTFail("testReadMovieResults")
+        }
+    }
 }

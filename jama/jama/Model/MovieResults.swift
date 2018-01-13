@@ -48,6 +48,13 @@ struct MovieResult: Codable {
         case adult, overview
         case releaseDate = "release_date"
     }
+    
+    func posterUrl(size: imageSize = .small) -> String? {
+        guard let path = posterPath else {
+            return nil
+        }
+        return "\(APIBase.baseImageUrl)\(size.rawValue)\(path)"
+    }
 }
 
 struct Dates: Codable {
@@ -73,6 +80,10 @@ extension MovieResults {
         self.init(data: data)
     }
     
+    init?(document: String) {
+        self = FileStorage.retrieve(document, from: .documents, as: MovieResults.self)
+    }
+    
     var jsonData: Data? {
         return try? JSONEncoder().encode(self)
     }
@@ -81,4 +92,43 @@ extension MovieResults {
         guard let data = self.jsonData else { return nil }
         return String(data: data, encoding: .utf8)
     }
+    
 }
+
+extension MovieResult {
+    init?(data: Data) {
+        guard let me = try? JSONDecoder().decode(MovieResult.self, from: data) else { return nil }
+        self = me
+    }
+    
+    init?(_ json: String, using encoding: String.Encoding = .utf8) {
+        guard let data = json.data(using: encoding) else { return nil }
+        self.init(data: data)
+    }
+    
+    init?(fromURL url: String) {
+        guard let url = URL(string: url) else { return nil }
+        guard let data = try? Data(contentsOf: url) else { return nil }
+        self.init(data: data)
+    }
+    
+    var jsonData: Data? {
+        return try? JSONEncoder().encode(self)
+    }
+    
+    var json: String? {
+        guard let data = self.jsonData else { return nil }
+        return String(data: data, encoding: .utf8)
+    }
+    
+}
+
+extension MovieResults {
+    public func saveToDocuments() {
+        FileStorage.store(self, to: .documents, as: "movieResults.json")
+    }
+    public func removeFromDocuments() {
+        FileStorage.remove("movieResults.json", from: .documents)
+    }
+}
+

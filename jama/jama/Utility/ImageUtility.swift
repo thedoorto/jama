@@ -29,3 +29,16 @@ func updateImageViewFromUrl(imageView: UIImageView?, imageUrl: String?, completi
         }).resume()
     }
 }
+
+func imageUrlForPath(_ path: String, width: CGFloat = 0) -> String? {
+    if width > 342 {
+        return imageUrlForPath(path, size: .large)
+    } else if width > 154 {
+        return imageUrlForPath(path, size: .medium)
+    }
+    return imageUrlForPath(path, size: .small)
+}
+
+func imageUrlForPath(_ path: String, size: imageSize = .small) -> String? {
+    return "\(APIBase.baseImageUrl)\(size.rawValue)\(path)"
+}

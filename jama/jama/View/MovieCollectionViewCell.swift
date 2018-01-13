@@ -9,11 +9,34 @@
 import UIKit
 
 class MovieCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var watchSwitch: UISwitch!
+    @IBOutlet weak var posterView: MoviePosterView!
     
-    func displayContent(posterUrl: String, title: String?) {
-        updateImageViewFromUrl(imageView: self.imageView, imageUrl: posterUrl) { }
-        titleLabel.text = title
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+    
+    func displayContent(posterUrl: String, title: String?, wantsToWatch: Bool = false) {
+        updateImageViewFromUrl(imageView: posterView.imageView, imageUrl: posterUrl) { }
+        posterView.titleLabel.text = title
+        watchSwitch.setOn(wantsToWatch, animated: false)
+    }
+    func displayMovie(movie: MovieResult, wantsToWatch: Bool = false) {
+        self.tag = movie.id
+        posterView.viewModel = MoviePosterView.ViewModel(movie: movie)
+        watchSwitch.setOn(wantsToWatch, animated: false)
+    }
+    func displayMovieCollectionPart(movie: CollectionPart, wantsToWatch: Bool = false) {
+        guard let jsonData = movie.jsonData,
+            let movieResult = MovieResult.init(data: jsonData) else {
+                return
+        }
+        displayMovie(movie: movieResult)
+    }
+    @IBAction func watchChanged(_ sender: UISwitch) {
+        let nc = NotificationCenter.default
+        nc.post(name:Notification.Name(rawValue:"WantsToWatch"),
+                object: nil,
+                userInfo: ["id":self.tag, "value":sender.isOn])
     }
 }
