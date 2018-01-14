@@ -20,7 +20,7 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     
     let api: APIClient = APIClient(api: APIBase())
-    var movie: MovieResult?
+    var movie: MovieViewController.MovieViewModel?
     var movieCollection: MovieCollection?
     
     override func viewDidLoad() {
@@ -40,7 +40,7 @@ class MovieDetailViewController: UIViewController {
         }
         titleLabel.text = movie.title
         descriptionText.text = movie.overview
-        api.getDetailForMovie(movie) { (detail, collection) in
+        api.getDetailForMovie(movie.id) { (detail, collection) in
             if let detail = detail {
                 self.updatePosterFromPath(detail.posterPath)
             }

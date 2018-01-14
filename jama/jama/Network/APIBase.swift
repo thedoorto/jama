@@ -69,7 +69,7 @@ class APIBase {
         urlComponents.host = "api.themoviedb.org"
     }
     
-    func createURLForPath(_ path: apiPath, id: Int? = nil) -> URL? {
+    func createURLForPath(_ path: apiPath, page: Int? = nil, id: Int? = nil) -> URL? {
         if let id = id {
             urlComponents.path = "\(path.rawValue)/\(id)"
         } else {
@@ -77,6 +77,9 @@ class APIBase {
         }
         let apiKeyQuery = URLQueryItem(name: "api_key", value: apiKey)
         urlComponents.queryItems = [apiKeyQuery]
+        if let page = page {
+            urlComponents.queryItems?.append(URLQueryItem(name: "page", value: String(page)))
+        }
         
         return urlComponents.url
     }

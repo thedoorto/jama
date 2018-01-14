@@ -72,6 +72,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="5WG-UV-QhV"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Sym-Fz-yYE"/>
+                                    <outlet property="prefetchDataSource" destination="BYZ-38-t0r" id="dy8-HJ-Jz0"/>
                                 </connections>
                             </collectionView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ca5-ND-bEU">

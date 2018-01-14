@@ -13,7 +13,14 @@ class MovieViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let api: APIClient = APIClient(api: APIBase())
-    var movies: [MovieResult] = []
+//    var movies: [MovieResult] = []
+//    var totalResults: Int = 0
+//    var movieResults: MovieResults?
+    
+    var viewModel: ViewModel = ViewModel() {
+        didSet {
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,12 +46,22 @@ class MovieViewController: UIViewController {
     
     private func updateMovies() {
         activityIndicator.startAnimating()
-        api.getMoviesNowPlaying{ (results) in
+//        api.getMoviesNowPlaying{ [weak self] (results, totalResults) in
+//            self?.totalResults = totalResults
+//            if let results = results {
+//                self?.movies = results
+//                DispatchQueue.main.async {
+//                    self?.collectionView.reloadSections(IndexSet(integer: 0))
+//                    self?.activityIndicator.stopAnimating()
+//                }
+//            }
+//        }
+        api.getMoviesNowPlaying{ [weak self] (results) in
             if let results = results {
-                self.movies = results
+                self?.viewModel = ViewModel(results: results)
                 DispatchQueue.main.async {
-                    self.collectionView.reloadSections(IndexSet(integer: 0))
-                    self.activityIndicator.stopAnimating()
+                    self?.collectionView.reloadSections(IndexSet(integer: 0))
+                    self?.activityIndicator.stopAnimating()
                 }
             }
         }
@@ -54,11 +71,14 @@ class MovieViewController: UIViewController {
 extension MovieViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies.count
+        return viewModel.totalResults
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCollectionCell", for: indexPath) as! MovieCollectionViewCell
+        guard let movies = viewModel.movies, indexPath.row < movies.count else {
+            return cell
+        }
         let movie = movies[indexPath.row]
         if let posterPath = movie.posterPath, let posterUrl =  api.imageUrlForPath(posterPath) {
             cell.displayContent(posterUrl: posterUrl, title: movie.title)
@@ -69,9 +89,68 @@ extension MovieViewController: UICollectionViewDataSource {
 
 extension MovieViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let detailViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController {
-            detailViewController.movie = movies[indexPath.row]
-            self.navigationController?.pushViewController(detailViewController, animated: true)
+        guard let movies = viewModel.movies,
+            indexPath.row < movies.count,
+            let detailViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController else {
+            return
         }
+        detailViewController.movie = movies[indexPath.row]
+        self.navigationController?.pushViewController(detailViewController, animated: true)
     }
 }
+
+extension MovieViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        _ = indexPaths.map{print("prefetch:\($0.row)")}
+    }
+}
+
+extension MovieViewController {
+    struct ViewModel {
+        let movies: [MovieViewModel]?
+        let page: Int
+        let totalResults: Int
+        let totalPages: Int
+    }
+    struct MovieViewModel {
+        let id: Int
+        let title: String?
+        let posterPath: String?
+//        let genreIDS: [Int]?
+        let overview: String?
+    }
+}
+
+extension MovieViewController.MovieViewModel {
+    init(movie: MovieResult) {
+        id = movie.id
+        title = movie.title
+        posterPath = movie.posterPath
+        overview = movie.overview
+    }
+    init() {
+        id = 0
+        title = nil
+        posterPath = nil
+        overview = nil
+    }
+}
+
+extension MovieViewController.ViewModel {
+    init(results: MovieResults) {
+        page = results.page
+        totalResults = results.totalResults
+        totalPages = results.totalPages
+        movies = results.results.map{
+            return MovieViewController.MovieViewModel(movie: $0)
+        }
+    }
+    init() {
+        page = 0
+        totalResults = 0
+        totalPages = 0
+        movies = nil
+    }
+}
+
+
