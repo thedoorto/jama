@@ -27,43 +27,6 @@ class APIClient {
             }
         }
     }
-
-    func getMoviesNowPlaying0(_ page: Int = 1, completion: @escaping ([MovieResult]?, Int) -> Void) {
-        getNowPlaying{ (results) in
-            switch results {
-            case .Success(let value):
-                completion(value.results, value.totalResults)
-            case .Failure(let error):
-                print(error.localizedDescription)
-                completion(nil, 0)
-            }
-        }
-    }
-
-    func getDetailForMovie(_ movie: MovieResult, completion: @escaping (MovieDetail?, MovieCollection?) -> Void) {
-        getMovieById(movie.id) { (detail) in
-            switch detail {
-            case .Success(let detail):
-                guard let id = detail.belongsToCollection?.id else {
-                    completion(detail, nil)
-                    return
-                }
-                self.getCollectionById(id) { (collection) in
-                    switch collection {
-                    case .Success(let collection):
-                        completion(detail, collection)
-                    case .Failure(let error):
-                        print(error.localizedDescription)
-                        completion(detail, nil)
-                    }
-                }
-            case .Failure(let error):
-                print(error.localizedDescription)
-                completion(nil, nil)
-            }
-            
-        }
-    }
     
     func getDetailForMovie(_ id: Int, completion: @escaping (MovieDetail?, MovieCollection?) -> Void) {
         getMovieById(id) { (detail) in

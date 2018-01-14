@@ -13,12 +13,12 @@ class MovieViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let api: APIClient = APIClient(api: APIBase())
-//    var movies: [MovieResult] = []
-//    var totalResults: Int = 0
-//    var movieResults: MovieResults?
-    
     var viewModel: ViewModel = ViewModel() {
         didSet {
+            DispatchQueue.main.async {
+                self.collectionView.reloadSections(IndexSet(integer: 0))
+                self.activityIndicator.stopAnimating()
+            }
         }
     }
     
@@ -46,23 +46,9 @@ class MovieViewController: UIViewController {
     
     private func updateMovies() {
         activityIndicator.startAnimating()
-//        api.getMoviesNowPlaying{ [weak self] (results, totalResults) in
-//            self?.totalResults = totalResults
-//            if let results = results {
-//                self?.movies = results
-//                DispatchQueue.main.async {
-//                    self?.collectionView.reloadSections(IndexSet(integer: 0))
-//                    self?.activityIndicator.stopAnimating()
-//                }
-//            }
-//        }
         api.getMoviesNowPlaying{ [weak self] (results) in
             if let results = results {
                 self?.viewModel = ViewModel(results: results)
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadSections(IndexSet(integer: 0))
-                    self?.activityIndicator.stopAnimating()
-                }
             }
         }
     }
