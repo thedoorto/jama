@@ -9,14 +9,14 @@
 import UIKit
 
 class MovieViewController: UIViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let api: APIClient = APIClient(api: APIBase())
     var viewModel: ViewModel = ViewModel() {
         didSet {
             DispatchQueue.main.async {
-                self.collectionView.reloadSections(IndexSet(integer: 0))
+                self.collectionView?.reloadSections(IndexSet(integer: 0))
                 self.activityIndicator.stopAnimating()
             }
         }
@@ -31,7 +31,7 @@ class MovieViewController: UIViewController {
         refreshControl.addTarget(self,
                                  action: #selector(refreshOptions(sender:)),
                                  for: .valueChanged)
-        collectionView.refreshControl = refreshControl
+        collectionView?.refreshControl = refreshControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
