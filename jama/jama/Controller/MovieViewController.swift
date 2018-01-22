@@ -39,12 +39,12 @@ class MovieViewController: UIViewController {
     
     private func updateMovies() {
         activityIndicator.startAnimating()
-        api.getMoviesNowPlaying{ (results) in
+        api.getMoviesNowPlaying{ [weak self] (results) in
             if let results = results {
-                self.movies = results
+                self?.movies = results
                 DispatchQueue.main.async {
-                    self.collectionView.reloadSections(IndexSet(integer: 0))
-                    self.activityIndicator.stopAnimating()
+                    self?.collectionView.reloadSections(IndexSet(integer: 0))
+                    self?.activityIndicator.stopAnimating()
                 }
             }
         }

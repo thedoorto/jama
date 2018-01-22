@@ -40,19 +40,19 @@ class MovieDetailViewController: UIViewController {
         }
         titleLabel.text = movie.title
         descriptionText.text = movie.overview
-        api.getDetailForMovie(movie) { (detail, collection) in
+        api.getDetailForMovie(movie) { [weak self] (detail, collection) in
             if let detail = detail {
-                self.updatePosterFromPath(detail.posterPath)
+                self?.updatePosterFromPath(detail.posterPath)
             }
             
             if let collection = collection {
                 DispatchQueue.main.async {
-                    self.collectionActivityIndicator.startAnimating()
+                    self?.collectionActivityIndicator.startAnimating()
                 }
-                self.movieCollection = collection
+                self?.movieCollection = collection
                 DispatchQueue.main.async {
-                    self.collectionView.reloadSections(IndexSet(integer: 0))
-                    self.collectionActivityIndicator.stopAnimating()
+                    self?.collectionView.reloadSections(IndexSet(integer: 0))
+                    self?.collectionActivityIndicator.stopAnimating()
                 }
             }
         }
