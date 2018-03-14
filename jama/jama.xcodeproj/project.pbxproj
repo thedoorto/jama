@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C865088120531B9C002E86FF /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C865088020531B9C002E86FF /* Navigator.swift */; };
+		C865088320531E50002E86FF /* LoginNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C865088220531E50002E86FF /* LoginNavigator.swift */; };
+		C865088520531FEC002E86FF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C865088420531FEC002E86FF /* LoginViewController.swift */; };
+		C86508872053216B002E86FF /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86508862053216B002E86FF /* File.swift */; };
+		C8650889205321B7002E86FF /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8650888205321B7002E86FF /* WelcomeViewController.swift */; };
+		C865088B205321D9002E86FF /* PasswordResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C865088A205321D9002E86FF /* PasswordResetViewController.swift */; };
+		C865088D205321FA002E86FF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C865088C205321FA002E86FF /* SignUpViewController.swift */; };
+		C865088F2053321E002E86FF /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C865088E2053321E002E86FF /* InitialViewController.swift */; };
 		C8D49F572000BE1600979970 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D49F562000BE1600979970 /* AppDelegate.swift */; };
 		C8D49F592000BE1600979970 /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D49F582000BE1600979970 /* MovieViewController.swift */; };
 		C8D49F5C2000BE1600979970 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8D49F5A2000BE1600979970 /* Main.storyboard */; };
@@ -43,6 +51,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C865088020531B9C002E86FF /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		C865088220531E50002E86FF /* LoginNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginNavigator.swift; sourceTree = "<group>"; };
+		C865088420531FEC002E86FF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		C86508862053216B002E86FF /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		C8650888205321B7002E86FF /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		C865088A205321D9002E86FF /* PasswordResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetViewController.swift; sourceTree = "<group>"; };
+		C865088C205321FA002E86FF /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		C865088E2053321E002E86FF /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		C8D49F532000BE1600979970 /* jama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jama.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8D49F562000BE1600979970 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8D49F582000BE1600979970 /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +108,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C865087F20531B9C002E86FF /* Navigtor */ = {
+			isa = PBXGroup;
+			children = (
+				C865088020531B9C002E86FF /* Navigator.swift */,
+				C865088220531E50002E86FF /* LoginNavigator.swift */,
+			);
+			path = Navigtor;
+			sourceTree = "<group>";
+		};
 		C8D49F4A2000BE1500979970 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +140,7 @@
 		C8D49F552000BE1600979970 /* jama */ = {
 			isa = PBXGroup;
 			children = (
+				C865087F20531B9C002E86FF /* Navigtor */,
 				C8D49F9920011E5700979970 /* Utility */,
 				C8D49F882000C5C600979970 /* Network */,
 				C8D49F872000C5A900979970 /* Model */,
@@ -153,6 +179,11 @@
 			children = (
 				C8D49F582000BE1600979970 /* MovieViewController.swift */,
 				C8D49F8B2000CA1200979970 /* MovieDetailViewController.swift */,
+				C865088420531FEC002E86FF /* LoginViewController.swift */,
+				C8650888205321B7002E86FF /* WelcomeViewController.swift */,
+				C865088A205321D9002E86FF /* PasswordResetViewController.swift */,
+				C865088C205321FA002E86FF /* SignUpViewController.swift */,
+				C865088E2053321E002E86FF /* InitialViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -171,6 +202,7 @@
 				C8D49F8F2000D91E00979970 /* MovieResults.swift */,
 				C8D49F952000FB7500979970 /* MovieDetail.swift */,
 				C8D49F972001077300979970 /* MovieCollection.swift */,
+				C86508862053216B002E86FF /* File.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -330,12 +362,20 @@
 				C8D49F8C2000CA1200979970 /* MovieDetailViewController.swift in Sources */,
 				C8D49F902000D91E00979970 /* MovieResults.swift in Sources */,
 				C8D49F8A2000C6B800979970 /* MovieCollectionViewCell.swift in Sources */,
+				C865088F2053321E002E86FF /* InitialViewController.swift in Sources */,
+				C865088B205321D9002E86FF /* PasswordResetViewController.swift in Sources */,
+				C865088320531E50002E86FF /* LoginNavigator.swift in Sources */,
+				C865088D205321FA002E86FF /* SignUpViewController.swift in Sources */,
 				C8D49F592000BE1600979970 /* MovieViewController.swift in Sources */,
 				C8D49F922000DDD400979970 /* APIBase.swift in Sources */,
+				C8650889205321B7002E86FF /* WelcomeViewController.swift in Sources */,
+				C865088120531B9C002E86FF /* Navigator.swift in Sources */,
 				C8D49F982001077300979970 /* MovieCollection.swift in Sources */,
 				C8D49F8E2000D82900979970 /* APIClient.swift in Sources */,
+				C86508872053216B002E86FF /* File.swift in Sources */,
 				C8D49F572000BE1600979970 /* AppDelegate.swift in Sources */,
 				C8D49F9B20011EA300979970 /* ImageUtility.swift in Sources */,
+				C865088520531FEC002E86FF /* LoginViewController.swift in Sources */,
 				C8D49F962000FB7500979970 /* MovieDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
